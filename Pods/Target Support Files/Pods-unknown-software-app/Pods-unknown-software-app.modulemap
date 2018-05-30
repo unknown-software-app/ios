@@ -1,0 +1,6 @@
+framework module Pods_unknown_software_app {
+  umbrella header "Pods-unknown-software-app-umbrella.h"
+
+  export *
+  module * { export * }
+}

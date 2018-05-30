@@ -7,6 +7,7 @@ target 'unknown-software-app' do
 
   # Pods for unknown-software-app
   pod 'Firebase/Core'
+  pod 'Firebase/Auth'
   target 'unknown-software-appTests' do
     inherit! :search_paths
     # Pods for testing

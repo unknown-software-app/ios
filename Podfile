@@ -8,6 +8,9 @@ target 'unknown-software-app' do
   # Pods for unknown-software-app
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'FBSDKLoginKit', inhibit_warnings: true
+  pod 'FBSDKCoreKit', inhibit_warnings: true
+  pod 'Bolts', inhibit_warnings: true
   target 'unknown-software-appTests' do
     inherit! :search_paths
     # Pods for testing

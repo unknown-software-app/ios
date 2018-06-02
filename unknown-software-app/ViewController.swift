@@ -8,25 +8,11 @@
 
 import UIKit
 import FBSDKLoginKit
+import FirebaseAuth
+
 
 class ViewController: UIViewController, FBSDKLoginButtonDelegate {
 
-    
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        if let error = error {
-            print(error.localizedDescription)
-            return
-        }
-        // ...
-    }
-    
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        print("User Logged Out")
-    }
-    
-    func loginButtonWillLogin(_ loginButton: FBSDKLoginButton) -> Bool{
-        return true
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +24,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         // Optional: Place the button in the center of your view.
         loginButton.delegate = self
         loginButton.center = view.center
-        loginButton.readPermissions = ["public_profile", "email"]
+        loginButton.readPermissions = ["public_profile", "email", "user_age_range", "user_gender"]
         view.addSubview(loginButton)
     }
 
@@ -47,5 +33,30 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+        // ...
+        let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+        Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
+            if let error = error {
+                // ...
+                print(error.localizedDescription)
+                return
+            }
+            // User is signed in
+            // ...
+        }
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        print("User Logged Out")
+    }
+    
+    func loginButtonWillLogin(_ loginButton: FBSDKLoginButton) -> Bool{
+        return true
+    }
 
 }

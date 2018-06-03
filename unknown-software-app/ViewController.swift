@@ -34,20 +34,24 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
 
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        if let error = error {
+        // marked the original if by matan: if let error = error {
+        if error != nil {
             print(error.localizedDescription)
             return
-        }
-        // ...
-        let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-        Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
-            if let error = error {
-                // ...
-                print(error.localizedDescription)
-                return
-            }
-            // User is signed in
+        } else if result.isCancelled {
+            print ("user press cancel")
+        } else {
             // ...
+            let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+            Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
+                if let error = error {
+                    // ...
+                    print(error.localizedDescription)
+                    return
+                }
+                // User is signed in
+                // ...
+            }
         }
     }
     

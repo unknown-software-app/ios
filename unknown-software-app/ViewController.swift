@@ -51,12 +51,23 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 }
                 // User is signed in
                 // ...
+                let user = Auth.auth().currentUser
+                if let user = user {
+                    print(user)
+                }
             }
         }
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
         print("User Logged Out")
+        
     }
     
     func loginButtonWillLogin(_ loginButton: FBSDKLoginButton) -> Bool{

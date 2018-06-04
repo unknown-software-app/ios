@@ -9,6 +9,7 @@
 import UIKit
 import FBSDKLoginKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class ViewController: UIViewController, FBSDKLoginButtonDelegate {
 
@@ -52,10 +53,11 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 // ...
                 let user = Auth.auth().currentUser
                 if let user = user {
-                    print(user)
+                    print("User is signed in")
                     // DataBase section
-                    //var ref: DatabaseReference!
-                    //ref = Database.database().reference()
+                    var ref: DatabaseReference!
+                    ref = Database.database().reference()
+                    ref.child("users").child(user.uid).setValue(["email": user.email!, "useruid": user.uid, "displayName": user.displayName!, "photoURL": "\(String(describing: user.photoURL))"])
                 }
             }
         }

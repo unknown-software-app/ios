@@ -10,7 +10,6 @@ import UIKit
 import FBSDKLoginKit
 import FirebaseAuth
 
-
 class ViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     
@@ -54,6 +53,9 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 let user = Auth.auth().currentUser
                 if let user = user {
                     print(user)
+                    // DataBase section
+                    //var ref: DatabaseReference!
+                    //ref = Database.database().reference()
                 }
             }
         }

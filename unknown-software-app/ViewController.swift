@@ -14,6 +14,8 @@ import FirebaseDatabase
 class ViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     
+    //var facebookUserFields = "x"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if FBSDKAccessToken.current() != nil {
@@ -24,7 +26,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         // Optional: Place the button in the center of your view.
         loginButton.delegate = self
         loginButton.center = view.center
-        loginButton.readPermissions = ["public_profile", "email", "user_age_range", "user_gender"]
+        loginButton.readPermissions = ["public_profile", "email", "user_age_range", "user_gender","user_birthday"]
         view.addSubview(loginButton)
     }
 
@@ -51,6 +53,20 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 }
                 // User is signed in
                 // ...
+                
+                if FBSDKAccessToken.current() != nil {
+                    FBSDKGraphRequest(graphPath: "me", parameters:  ["fields": "id, name, first_name, last_name, email, gender, age_range,birthday"] ).start(completionHandler: { connection, result, error in
+                        if error == nil {
+                            if result != nil {
+                                let fields = result as? [String:Any]
+                                print(fields!["first_name"]!)
+                                //self.facebookUserFields = fields!["first_name"]! as! String
+                            }
+                        }
+                    })
+                }
+
+
                 let user = Auth.auth().currentUser
                 if let user = user {
                     print("User is signed in")
@@ -62,6 +78,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
             }
         }
     }
+    
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         let firebaseAuth = Auth.auth()

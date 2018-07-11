@@ -65,8 +65,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                         }
                     })
                 }
-
-
+    
                 
                 let user = Auth.auth().currentUser
                 if let user = user {
@@ -74,7 +73,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                     // DataBase section
                     var ref: DatabaseReference!
                     ref = Database.database().reference()
-                    ref.child("users").child(user.uid).setValue(["email": user.email!, "useruid": user.uid, "displayName": user.displayName!, "photoURL": "\(String(describing: user.photoURL))"])
+                    ref.child("users").child(user.uid).setValue(["email": user.email!, "useruid": user.uid, "displayName": user.displayName!, "photoURL": user.photoURL?.absoluteString])
                 }
             }
         }

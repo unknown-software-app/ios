@@ -67,6 +67,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 }
     
                 
+                
                 let user = Auth.auth().currentUser
                 if let user = user {
                     print("User is signed in")
